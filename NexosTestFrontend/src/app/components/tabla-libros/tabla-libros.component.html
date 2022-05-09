@@ -1,0 +1,66 @@
+<div class="cardPrincipal card">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3 class="text-center">Listado de Libros</h3>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-1" style="padding-top: 5px;">
+      <h5>Filtrar :</h5>
+    </div>
+    <div class="col-sm-3">
+      <select class="form-select" aria-label="Default select example" [(ngModel)]="fieldFilter">
+        <option selected>Seleccione una opción</option>
+        <option value="Autor">Autor</option>
+        <option value="Titulo">Titulo</option>
+        <option value="Año">Año</option>
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <input type="text" class="form-control" id="Busqueda" name="Busqueda" placeholder="Contiene" [(ngModel)]="criterioFilter" />
+    </div>
+    <div class="col-sm-3">
+      <button class="btn btn-primary" (click)="filtrar()">Filtrar</button>
+    </div>
+  </div>
+  <br>
+  <table class="table table-striped table-hover">
+    <thead>
+        <th style="width: 20%;" class="h5">Titulo
+        <th style="width: 10%;" class="h5">Año</th>
+        <th style="width: 20%;" class="h5">Genero</th>
+        <th style="width: 10%;" class="h5"># Paginas</th>
+        <th style="width: 20%;" class="h5">Editorial</th>
+        <th style="width: 20%;" class="h5">Autor</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let libro of libros">
+          <td>{{libro.Titulo}}</td>
+          <td>{{libro.Ano}}</td>
+          <td>{{libro.Genero}}</td>
+          <td>{{libro.NumeroPaginas}}</td>
+          <td>{{libro.Autor}}</td>
+          <td>{{libro.Editorial}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item">
+        <a class="page-link" (click)="previusPage()">Previous</a>
+      </li>
+      <li *ngFor="let pag of paginas" [ngClass]="{'page-item': true, 'active': pag == page}" ><a class="page-link" (click)="setPage(pag)">{{pag}}</a></li>
+
+      <li class="page-item">
+        <a class="page-link" (click)="nextPage()">Next</a>
+      </li>
+    </ul>
+  </nav>
+  <br>
+</div>
+
+
+
+
