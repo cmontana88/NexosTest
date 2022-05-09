@@ -5,6 +5,7 @@ using NexosTestBackend.Core.DTOs;
 using NexosTestBackend.Core.Exceptions;
 using NexosTestBackend.Core.Interfaces;
 using NexosTestBackend.Data.Entidades;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace NexosTestBackend.Controllers
     [ApiController]
     public class EditorialController : ControllerBase
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private readonly IService<Editorial> _serviceEditorial;
         private readonly IMapper _mapper;
         public EditorialController(IService<Editorial> serviceEditorial, IMapper mapper)
@@ -35,8 +37,9 @@ namespace NexosTestBackend.Controllers
 
                 return Ok(editorialesDtos);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Error al obtener el listado de editoriales.");
             }
         }
@@ -55,8 +58,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, $"Error al obtener la editorial con id = {id}.");
             }
         }
@@ -80,8 +84,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Error al crear la editorial.");
             }
         }
@@ -105,8 +110,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Error al actualizar la editorial.");
             }
         }
@@ -124,8 +130,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, $"Error al eliminar la editorial con id = {id}.");
             }
         }

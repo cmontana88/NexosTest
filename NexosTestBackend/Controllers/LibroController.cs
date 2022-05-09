@@ -5,6 +5,7 @@ using NexosTestBackend.Core.DTOs;
 using NexosTestBackend.Core.Exceptions;
 using NexosTestBackend.Core.Interfaces;
 using NexosTestBackend.Data.Entidades;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace NexosTestBackend.Controllers
     [ApiController]
     public class LibroController : ControllerBase
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private readonly IService<Libro> _serviceLibro;
         private readonly IMapper _mapper;
         public LibroController(IService<Libro> serviceLibro, IMapper mapper)
@@ -35,8 +37,9 @@ namespace NexosTestBackend.Controllers
 
                 return Ok(librosDtos);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Error al obtener el listado de libros.");
             }
         }
@@ -55,8 +58,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, $"Error al obtener el libro con id = {id}.");
             }
         }
@@ -73,8 +77,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, $"Error al obtener los libros filtrados.");
             }
         }
@@ -98,8 +103,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Error al crear el libro.");
             }
         }
@@ -123,8 +129,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Error al actualizar el libro.");
             }
         }
@@ -142,8 +149,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, $"Error al eliminar el libro con id = {id}.");
             }
         }

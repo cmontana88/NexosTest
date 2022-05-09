@@ -5,6 +5,7 @@ using NexosTestBackend.Core.DTOs;
 using NexosTestBackend.Core.Exceptions;
 using NexosTestBackend.Core.Interfaces;
 using NexosTestBackend.Data.Entidades;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace NexosTestBackend.Controllers
     [ApiController]
     public class AutorController : ControllerBase
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private readonly IService<Autor> _serviceAutor;
         private readonly IMapper _mapper;
         public AutorController(IService<Autor> serviceAutor, IMapper mapper)
@@ -35,8 +37,9 @@ namespace NexosTestBackend.Controllers
 
                 return Ok(autoresDtos);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Error al obtener el listado de autores.");
             }
         }
@@ -55,8 +58,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, $"Error al obtener el autor con id = {id}.");
             }
         }
@@ -80,8 +84,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Error al crear el autor.");
             }
         }
@@ -105,8 +110,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Error al actualizar el autor.");
             }
         }
@@ -124,8 +130,9 @@ namespace NexosTestBackend.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.Error(ex.Message + ex.InnerException.Message ?? string.Empty);
                 return StatusCode((int)HttpStatusCode.InternalServerError, $"Error al eliminar el autor con id = {id}.");
             }
         }
